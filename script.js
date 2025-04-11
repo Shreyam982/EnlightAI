@@ -1,14 +1,208 @@
+// Track which goal card is currently displayed
+let currentGoalIndex = 0;
+let goalsData = [];
+
+// Fetch the JSON data when the page loads
+document.addEventListener('DOMContentLoaded', async function() {
+    try {
+        const response = await fetch('data.json');
+        const data = await response.json();
+        goalsData = data.goals;
+        
+        // Initialize the Enlighten tab with the first goal card
+        initializeEnlightenTab();
+    } catch (error) {
+        console.error('Error loading goals data:', error);
+    }
+});
+
+// Initialize the goals in the Enlighten tab
+function initializeEnlightenTab() {
+    if (goalsData.length > 0) {
+        renderGoalCard(goalsData[0]);
+    }
+}
+
+// Create and render a goal card based on the data
+function renderGoalCard(goalData) {
+    // Clear the cards container
+    const cardsContainer = document.getElementById('cards-container');
+    cardsContainer.innerHTML = '';
+    
+    // Clone the template
+    const template = document.getElementById('goal-card-template');
+    const goalCard = template.content.cloneNode(true);
+    
+    // Set card ID
+    goalCard.querySelector('.goal-card').id = `goal-card-${goalData.id}`;
+    
+    // Handle different card layouts based on the data
+    if (goalData.title === 'Goal 1' || goalData.title === 'Goal 2') {
+        // Standard goal card layout
+        goalCard.querySelector('.card-subtitle').textContent = goalData.title;
+        goalCard.querySelector('.card-title').textContent = goalData.description;
+        
+        // Add tags
+        const tagsContainer = goalCard.querySelector('.tags');
+        goalData.tags.forEach(tag => {
+            const tagElement = document.createElement('span');
+            tagElement.className = `tag ${tag.color}`;
+            tagElement.textContent = tag.text;
+            tagsContainer.appendChild(tagElement);
+        });
+        
+        // Add content
+        if (goalData.content) {
+            goalCard.querySelector('.card-description').textContent = goalData.content;
+            
+            // Add list items if available
+            if (goalData.list && goalData.list.length > 0) {
+                const listElement = goalCard.querySelector('.card-list');
+                goalData.list.forEach(item => {
+                    const li = document.createElement('li');
+                    li.textContent = item;
+                    listElement.appendChild(li);
+                });
+            } else {
+                goalCard.querySelector('.card-list').remove();
+            }
+        }
+        
+    } else {
+        // Fluids card layout (special case for card 2)
+        const headerDiv = goalCard.querySelector('.goal-header');
+        headerDiv.innerHTML = ''; // Clear default structure
+        
+        // Create tag container
+        const tagContainer = document.createElement('div');
+        tagContainer.className = 'tag-container';
+        
+        // Add tags
+        goalData.tags.forEach(tag => {
+            const tagElement = document.createElement('span');
+            tagElement.className = `tag ${tag.color}`;
+            tagElement.textContent = tag.text;
+            tagContainer.appendChild(tagElement);
+        });
+        
+        // Add author tag if available
+        if (goalData.author) {
+            const authorTag = document.createElement('span');
+            authorTag.className = 'tag red author-tag';
+            authorTag.textContent = goalData.author;
+            tagContainer.appendChild(authorTag);
+        }
+        
+        headerDiv.appendChild(tagContainer);
+        
+        // Add description
+        const descriptionPara = document.createElement('p');
+        descriptionPara.textContent = goalData.description;
+        headerDiv.appendChild(descriptionPara);
+        
+        // Remove unnecessary elements for this card type
+        goalCard.querySelector('.card-description').remove();
+        goalCard.querySelector('.card-list').remove();
+        
+        // Change the explain link text
+        const explainLink = goalCard.querySelector('.explain-link');
+        explainLink.textContent = 'Close Trace ▲';
+        explainLink.classList.add('collapse');
+        
+        // Show explanation by default
+        const explanation = goalCard.querySelector('.explanation');
+        explanation.style.display = 'block';
+        
+        // Remove Edit button for Fluids card
+        goalCard.querySelector('.edit-btn').remove();
+    }
+    
+    // Set explanation text
+    goalCard.querySelector('.explanation').textContent = goalData.explanation;
+    
+    // Append the card to the container
+    cardsContainer.appendChild(goalCard);
+    
+    // Add event listeners to the newly created card
+    addCardEventListeners(goalData);
+}
+
+// Add event listeners to goal card
+function addCardEventListeners(goalData) {
+    // Explanation toggle
+    document.querySelectorAll('.explain-link').forEach(function(link) {
+        link.addEventListener('click', function(event) {
+            event.preventDefault();
+            event.stopPropagation();
+            
+            const explanation = this.nextElementSibling;
+            const isCollapsed = explanation.style.display === 'none' || !explanation.style.display;
+            
+            // Update ARIA attributes
+            this.setAttribute('aria-expanded', isCollapsed ? 'true' : 'false');
+            
+            if (isCollapsed) {
+                explanation.style.display = 'block';
+                if (!this.classList.contains('collapse')) {
+                    this.textContent = 'Explain why ▲';
+                    this.classList.add('collapse');
+                } else {
+                    this.textContent = 'Close Trace ▼';
+                    this.classList.remove('collapse');
+                }
+            } else {
+                explanation.style.display = 'none';
+                if (!this.classList.contains('collapse')) {
+                    this.textContent = 'Explain why ▼';
+                } else {
+                    this.textContent = 'Close Trace ▲';
+                    this.classList.add('collapse');
+                }
+            }
+        });
+    });
+
+    // Card click for sources
+    document.querySelectorAll('.goal-card').forEach(function(card) {
+        card.addEventListener('click', function(event) {
+            // Don't show sources panel if clicking on buttons or links
+            if (event.target.tagName === 'BUTTON' || 
+                event.target.tagName === 'A' || 
+                event.target.closest('.card-actions') || 
+                event.target.closest('.explain-section')) {
+                return;
+            }
+            
+            // Show source content for the clicked card
+            const sourcesPanel = document.querySelector('.sources-panel');
+            const sourceContent = document.getElementById('source-content');
+            
+            // Update source content from the goal data
+            sourceContent.innerHTML = `
+                <p>${goalData.source.content}</p>
+                <p><strong>Citation:</strong> ${goalData.source.citation}</p>
+            `;
+            
+            sourcesPanel.style.display = 'block';
+        });
+    });
+}
+
+// Handle tab switching
 document.addEventListener('DOMContentLoaded', function() {
     const tabs = document.querySelectorAll('.tab');
     const currentNoteContent = document.querySelector('.current-note-content');
-    const marContent = document.querySelector('.mar-content');
     
     tabs.forEach(tab => {
         tab.addEventListener('click', function() {
-            // Remove active class from all tabs
-            tabs.forEach(t => t.classList.remove('active'));
+            // Update aria-selected attribute for all tabs
+            tabs.forEach(t => {
+                t.setAttribute('aria-selected', 'false');
+                t.classList.remove('active');
+            });
             
-            // Add active class to clicked tab
+            // Set current tab as selected
+            this.setAttribute('aria-selected', 'true');
             this.classList.add('active');
             
             // Hide all content sections
@@ -25,6 +219,108 @@ document.addEventListener('DOMContentLoaded', function() {
                 if (!marContent.classList.contains('animated')) {
                     marContent.classList.add('animated');
                     startMARAnimation();
+            // Add list items if available
+            if (goalData.list && goalData.list.length > 0) {
+                const listElement = goalCard.querySelector('.card-list');
+                goalData.list.forEach(item => {
+                    const li = document.createElement('li');
+                    li.textContent = item;
+                    listElement.appendChild(li);
+                });
+            } else {
+                goalCard.querySelector('.card-list').remove();
+            }
+        }
+        
+    } else {
+        // Fluids card layout (special case for card 2)
+        const headerDiv = goalCard.querySelector('.goal-header');
+        headerDiv.innerHTML = ''; // Clear default structure
+        
+        // Create tag container
+        const tagContainer = document.createElement('div');
+        tagContainer.className = 'tag-container';
+        
+        // Add tags
+        goalData.tags.forEach(tag => {
+            const tagElement = document.createElement('span');
+            tagElement.className = `tag ${tag.color}`;
+            tagElement.textContent = tag.text;
+            tagContainer.appendChild(tagElement);
+        });
+        
+        // Add author tag if available
+        if (goalData.author) {
+            const authorTag = document.createElement('span');
+            authorTag.className = 'tag red author-tag';
+            authorTag.textContent = goalData.author;
+            tagContainer.appendChild(authorTag);
+        }
+        
+        headerDiv.appendChild(tagContainer);
+        
+        // Add description
+        const descriptionPara = document.createElement('p');
+        descriptionPara.textContent = goalData.description;
+        headerDiv.appendChild(descriptionPara);
+        
+        // Remove unnecessary elements for this card type
+        goalCard.querySelector('.card-description').remove();
+        goalCard.querySelector('.card-list').remove();
+        
+        // Change the explain link text
+        const explainLink = goalCard.querySelector('.explain-link');
+        explainLink.textContent = 'Close Trace ▲';
+        explainLink.classList.add('collapse');
+        
+        // Show explanation by default
+        const explanation = goalCard.querySelector('.explanation');
+        explanation.style.display = 'block';
+        
+        // Remove Edit button for Fluids card
+        goalCard.querySelector('.edit-btn').remove();
+    }
+    
+    // Set explanation text
+    goalCard.querySelector('.explanation').textContent = goalData.explanation;
+    
+    // Append the card to the container
+    cardsContainer.appendChild(goalCard);
+    
+    // Add event listeners to the newly created card
+    addCardEventListeners(goalData);
+}
+
+// Add event listeners to goal card
+function addCardEventListeners(goalData) {
+    // Explanation toggle
+    document.querySelectorAll('.explain-link').forEach(function(link) {
+        link.addEventListener('click', function(event) {
+            event.preventDefault();
+            event.stopPropagation();
+            
+            const explanation = this.nextElementSibling;
+            const isCollapsed = explanation.style.display === 'none' || !explanation.style.display;
+            
+            // Update ARIA attributes
+            this.setAttribute('aria-expanded', isCollapsed ? 'true' : 'false');
+            
+            if (isCollapsed) {
+                explanation.style.display = 'block';
+                if (!this.classList.contains('collapse')) {
+                    this.textContent = 'Explain why ▲';
+                    this.classList.add('collapse');
+                } else {
+                    this.textContent = 'Close Trace ▼';
+                    this.classList.remove('collapse');
+                }
+            } else {
+                explanation.style.display = 'none';
+                if (!this.classList.contains('collapse')) {
+                    this.textContent = 'Explain why ▼';
+                } else {
+                    this.textContent = 'Close Trace ▲';
+                    this.classList.add('collapse');
                 }
             }
         });
@@ -137,9 +433,68 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         }, 1000);
     }
+    // Card click for sources
+    document.querySelectorAll('.goal-card').forEach(function(card) {
+        card.addEventListener('click', function(event) {
+            // Don't show sources panel if clicking on buttons or links
+            if (event.target.tagName === 'BUTTON' || 
+                event.target.tagName === 'A' || 
+                event.target.closest('.card-actions') || 
+                event.target.closest('.explain-section')) {
+                return;
+            }
+            
+            // Show source content for the clicked card
+            const sourcesPanel = document.querySelector('.sources-panel');
+            const sourceContent = document.getElementById('source-content');
+            
+            // Update source content from the goal data
+            sourceContent.innerHTML = `
+                <p>${goalData.source.content}</p>
+                <p><strong>Citation:</strong> ${goalData.source.citation}</p>
+            `;
+            
+            sourcesPanel.style.display = 'block';
+        });
+    });
+}
+
+// Handle tab switching
+document.addEventListener('DOMContentLoaded', function() {
+    const tabs = document.querySelectorAll('.tab');
+    
+    tabs.forEach(tab => {
+        tab.addEventListener('click', function() {
+            // Update aria-selected attribute for all tabs
+            tabs.forEach(t => {
+                t.setAttribute('aria-selected', 'false');
+                t.classList.remove('active');
+            });
+            
+            // Set current tab as selected
+            this.setAttribute('aria-selected', 'true');
+            this.classList.add('active');
+            
+            // Hide all tab contents
+            document.querySelectorAll('[role="tabpanel"]').forEach(panel => {
+                panel.style.display = 'none';
+            });
+            
+            // Show corresponding tab content
+            if (this.id === 'abridge-tab') {
+                document.getElementById('abridge-content').style.display = 'block';
+            } else if (this.id === 'enlighten-tab') {
+                document.getElementById('enlighten-content').style.display = 'block';
+            } else if (this.id === 'current-note-tab') {
+                document.querySelector('.current-note-content').style.display = 'block';
+            }
+        });
+    });
 });
 
+// Create note button functionality - now also cycles through goal cards
 document.getElementById('create-note').addEventListener('click', function() {
+    // Add note to the notes panel as before
     const notesContent = document.querySelector('.notes-content');
     const newNote = document.createElement('div');
     newNote.classList.add('note-section');
@@ -157,4 +512,10 @@ document.getElementById('create-note').addEventListener('click', function() {
     
     // Scroll to the new note
     newNote.scrollIntoView({ behavior: 'smooth' });
+    
+    // Switch to the next goal card if we're in the Enlighten tab
+    if (document.getElementById('enlighten-tab').getAttribute('aria-selected') === 'true') {
+        currentGoalIndex = (currentGoalIndex + 1) % goalsData.length;
+        renderGoalCard(goalsData[currentGoalIndex]);
+    }
 });

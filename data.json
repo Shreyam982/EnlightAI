@@ -1,0 +1,57 @@
+{
+  "goals": [
+    {
+      "id": 1,
+      "title": "Goal 1",
+      "description": "Analyse & stabilise hemodynamics.",
+      "tags": [
+        { "text": "Labs", "color": "pink" },
+        { "text": "Level B Evidence", "color": "orange" }
+      ],
+      "content": "Order the following labs:",
+      "list": [
+        "CBC", "EUC", "BGL", "Lipids", "LFTs", "TSH", "Iron studies"
+      ],
+      "explanation": "These labs are indicated for initial evaluation of suspected fluid overload and metabolic imbalance.",
+      "source": {
+        "content": "According to Smithfield et al. (2024), clinical evaluation of fluid status should include a comprehensive metabolic panel to assess electrolyte imbalances which may contribute to or result from fluid retention.",
+        "citation": "Smithfield, J., Johnson, K., & Lee, M. (2024). Modern approaches to fluid management in acute care settings. Journal of Emergency Medicine, 48(3), 326-342."
+      }
+    },
+    {
+      "id": 2,
+      "title": "Fluids",
+      "author": "Shreya",
+      "description": "Give 1200 mL 0.9% NaCl over 24 hours",
+      "tags": [
+        { "text": "Fluids", "color": "pink" }
+      ],
+      "explanation": "Isotonic fluid replacement helps restore intravascular volume without causing significant shifts in electrolyte concentrations.",
+      "source": {
+        "content": "Current guidelines from the International Fluid Management Society recommend careful titration of isotonic crystalloids in patients with heart failure, with a preference for balanced solutions when possible.",
+        "citation": "Rodriguez, A., et al. (2025). Fluid management strategies in acute decompensated heart failure. Heart Failure Reviews, 30(1), 42-53."
+      }
+    },
+    {
+      "id": 3,
+      "title": "Goal 2",
+      "description": "Optimize respiratory status.",
+      "tags": [
+        { "text": "Oxygen", "color": "blue" },
+        { "text": "Level A Evidence", "color": "green" }
+      ],
+      "content": "Consider the following interventions:",
+      "list": [
+        "Supplemental oxygen to maintain SpO2 > 92%", 
+        "Position patient upright", 
+        "Consider CPAP if respiratory distress persists",
+        "Monitor for signs of respiratory fatigue"
+      ],
+      "explanation": "Optimization of oxygenation is critical in acute heart failure to reduce work of breathing and improve tissue perfusion.",
+      "source": {
+        "content": "A randomized controlled trial by Chen et al. demonstrated that early optimization of oxygenation in acute heart failure reduced intubation rates by 28% compared to standard care protocols.",
+        "citation": "Chen, L., et al. (2023). Early respiratory optimization strategies in acute heart failure: a multicenter randomized controlled trial. JAMA Cardiology, 8(4), 312-320."
+      }
+    }
+  ]
+}

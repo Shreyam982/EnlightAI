@@ -8,6 +8,12 @@ body {
     overflow-x: hidden;
 }
 
+/* Focus styles for accessibility */
+:focus {
+    outline: 2px solid #007bff;
+    outline-offset: 2px;
+}
+
 .top-bar {
     display: flex;
     justify-content: space-between;
@@ -48,13 +54,14 @@ body {
 .container {
     display: flex;
     flex: 1;
-    max-width: 1600px;
+    max-width: 1800px;
     margin: 0 auto;
     width: 100%;
 }
 
 .sidebar {
     width: 20%;
+    min-width: 200px;
     background-color: white;
     padding: 20px;
     box-shadow: 2px 0 5px rgba(0, 0, 0, 0.05);
@@ -100,9 +107,12 @@ body {
 
 .main-content {
     flex: 1;
+    min-width: 0; /* Prevents flex item from expanding beyond parent */
     padding: 20px;
     background-color: #e6f2ff;
     box-shadow: 2px 0 5px rgba(0, 0, 0, 0.05);
+    display: flex;
+    flex-direction: column;
 }
 
 .tabs {
@@ -110,6 +120,8 @@ body {
     justify-content: space-between;
     margin-bottom: 20px;
     padding: 0 15px;
+    flex-wrap: wrap;
+    gap: 10px;
 }
 
 .tab {
@@ -122,6 +134,8 @@ body {
     font-size: 14px;
     text-align: center;
     min-width: 100px;
+    flex: 1;
+    max-width: 180px;
 }
 
 .tab.active {
@@ -136,10 +150,23 @@ body {
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     margin-top: 10px;
+    flex: 1;
+    overflow: auto;
+}
+
+.current-note-content {
+    padding: 20px;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-top: 10px;
+    flex: 1;
+    overflow: auto;
 }
 
 .notes-panel {
     width: 30%;
+    min-width: 280px;
     background-color: white;
     padding: 0;
     box-shadow: -2px 0 5px rgba(0, 0, 0, 0.05);
@@ -234,66 +261,187 @@ button {
     border-radius: 5px;
     cursor: pointer;
     font-size: 14px;
+    transition: background-color 0.2s ease;
 }
 
 button:hover {
     background-color: #0056b3;
 }
 
-.current-note-content {
-    padding: 20px;
-    background-color: #fff;
-    border-radius: 8px;
-    margin: 20px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+button:focus {
+    outline: 2px solid #003d80;
+    outline-offset: 2px;
 }
 
-.enlighten-section {
-    margin-bottom: 30px;
-    padding: 20px;
-    background-color: #f8f9fa;
-    border-radius: 8px;
+/* Enlighten Tab Styles */
+.enlighten-container {
+    display: flex;
+    height: 100%;
 }
 
-.enlighten-section h2 {
-    color: #2c3e50;
+.cards-container {
+    flex: 1;
+    padding: 20px;
+    overflow-y: auto;
+}
+
+.sources-panel {
+    width: 40%;
+    background-color: white;
+    padding: 20px;
+    border-left: 1px solid #ddd;
+    box-shadow: -2px 0 5px rgba(0, 0, 0, 0.05);
+    overflow-y: auto;
+}
+
+.sources-panel h3 {
+    font-size: 18px;
     margin-bottom: 15px;
-    font-size: 1.5em;
-    border-bottom: 2px solid #e9ecef;
-    padding-bottom: 10px;
+    color: #333;
 }
 
-.enlighten-section h3 {
-    color: #34495e;
-    margin: 15px 0;
-    font-size: 1.2em;
-}
-
-.case-content, .history-content, .management-content {
+.source-content {
+    font-size: 14px;
     line-height: 1.6;
-    color: #2c3e50;
 }
 
-.examination ul, .management-content ul {
-    list-style-type: none;
-    padding-left: 20px;
+.source-content p {
+    margin-bottom: 15px;
 }
 
-.examination li, .management-content li {
-    margin-bottom: 8px;
-    position: relative;
+.goal-card {
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: box-shadow 0.3s ease;
 }
 
-.examination li::before, .management-content li::before {
-    content: "•";
-    color: #3498db;
+.goal-card:hover, .goal-card:focus {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.goal-header {
+    padding: 15px 20px;
+    background-color: #f9f9f9;
+}
+
+.goal-header h3 {
+    font-size: 14px;
+    color: #666;
+    margin: 0 0 8px 0;
+}
+
+.goal-header h2 {
+    font-size: 18px;
+    margin: 0;
+    color: #333;
+}
+
+.card-content {
+    padding: 15px 20px;
+}
+
+.tags {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 15px;
+    flex-wrap: wrap;
+}
+
+.tag-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.tag {
+    font-size: 12px;
+    padding: 4px 10px;
+    border-radius: 15px;
+    display: inline-block;
+    font-weight: 500;
+}
+
+.tag.pink {
+    background-color: #ffcce6;
+    color: #990066;
+}
+
+.tag.orange {
+    background-color: #ffe6cc;
+    color: #cc6600;
+}
+
+.tag.red {
+    background-color: #ffcccc;
+    color: #cc0000;
+}
+
+.tag.blue {
+    background-color: #cce5ff;
+    color: #004085;
+}
+
+.tag.green {
+    background-color: #d4edda;
+    color: #155724;
+}
+
+.author-tag {
     font-weight: bold;
-    position: absolute;
-    left: -20px;
 }
 
-.allergies, .examination, .impression {
+.card-content p {
+    margin: 0 0 10px 0;
+    font-size: 14px;
+}
+
+.card-content ul {
+    margin: 10px 0;
+    padding-left: 25px;
+}
+
+.card-content li {
+    margin-bottom: 5px;
+    font-size: 14px;
+}
+
+.explain-section {
+    margin: 15px 0;
+}
+
+.explain-link {
+    color: #3399ff;
+    text-decoration: none;
+    font-size: 13px;
+    display: block;
+    margin-bottom: 5px;
+    background: none;
+    border: none;
+    text-align: left;
+    padding: 0;
+    cursor: pointer;
+}
+
+.explanation {
+    background-color: #f0f0f0;
+    padding: 10px 15px;
+    border-radius: 5px;
+    font-size: 13px;
+    color: #555;
+    line-height: 1.4;
+    margin-top: 5px;
+}
+
+.card-actions {
+    display: flex;
+    gap: 10px;
     margin-top: 15px;
+<<<<<<< Updated upstream
     padding: 15px;
     background-color: #fff;
     border-radius: 6px;
@@ -524,4 +672,90 @@ button:hover {
     border-radius: 4px;
     margin-top: 15px;
     text-align: center;
+=======
+}
+
+.action-btn {
+    background-color: #004080;
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.action-btn:hover {
+    background-color: #002850;
+}
+
+.edit-btn {
+    background-color: #f0f0f0;
+    color: #333;
+    border: 1px solid #ddd;
+    padding: 8px 15px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.edit-btn:hover {
+    background-color: #e0e0e0;
+}
+
+/* Hide template */
+template {
+    display: none;
+}
+
+/* Responsive adjustments */
+@media (max-width: 1200px) {
+    .container {
+        flex-direction: column;
+    }
+    
+    .sidebar, .main-content, .notes-panel {
+        width: 100%;
+    }
+    
+    .enlighten-container {
+        flex-direction: column;
+    }
+    
+    .sources-panel {
+        width: auto;
+        border-left: none;
+        border-top: 1px solid #ddd;
+        max-height: 300px;
+    }
+}
+
+@media (min-width: 1201px) and (max-width: 1600px) {
+    .enlighten-container {
+        flex-direction: row;
+    }
+    
+    .sources-panel {
+        width: 40%;
+    }
+}
+
+/* Keyboard navigation improvements */
+.tab:focus-visible, 
+.goal-card:focus-visible, 
+button:focus-visible {
+    outline: 3px solid #007bff;
+    outline-offset: 2px;
+    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.25);
+}
+
+/* Animations for better UI feedback */
+.tab-content, .goal-card, .sources-panel {
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+>>>>>>> Stashed changes
 }

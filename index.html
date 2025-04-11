@@ -5,21 +5,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Healthcare Dashboard</title>
     <link rel="stylesheet" href="styles.css">
+    <meta name="description" content="Epic Healthcare Dashboard for clinical decision support">
 </head>
 <body>
-    <div class="top-bar">
-        <div class="logo">Epic</div>
+    <header class="top-bar" role="banner">
+        <div class="logo" aria-label="Epic logo">Epic</div>
         <div class="search-bar">
-            <span class="stethoscope">🩺</span>
+            <span class="stethoscope" aria-hidden="true">🩺</span>
             <span class="patient-name">Cobb, Jessica</span>
         </div>
-        <div class="user-name">MATTHEW SHU</div>
-    </div>
+        <div class="user-name" aria-label="Logged in user">MATTHEW SHU</div>
+    </header>
 
     <div class="container">
-        <div class="sidebar">
+        <aside class="sidebar" role="complementary" aria-label="Patient information">
             <div class="profile">
-                <div class="profile-pic"></div>
+                <div class="profile-pic" aria-hidden="true"></div>
                 <div class="profile-name">Cobb, Jessica</div>
             </div>
             <div class="info-section">
@@ -40,57 +41,18 @@
                 <div class="tab" id="mar-tab">MAR</div>
             </div>
             
-            <div class="current-note-content">
-                <div class="enlighten-section">
-                    <h2>Patient Case</h2>
-                    <div class="case-content">
-                        <p>74yo M presents w/ 3 day worsening dyspnea, orthopnea, peripheral edema and poor appetite. Reports paroxysmal nocturnal dyspnea, 2 pillows at night, breathless at rest. Also reports a decreased urine output but nil hematuria, dysuria, or flank pain. Nil constitutional symptoms of fever, night sweats or unintentional weight loss or infective symptoms of cough w/ sputum, wheeze.</p>
+            <div class="tab-content" id="enlighten-content" style="display: none;" role="tabpanel" aria-labelledby="enlighten-tab">
+                <div class="enlighten-container">
+                    <div class="cards-container" id="cards-container">
+                        <!-- Cards will be loaded dynamically from JSON -->
                     </div>
-                </div>
 
-                <div class="enlighten-section">
-                    <h2>History</h2>
-                    <div class="history-content">
-                        <p>History of atrial fibrillation, severe left ischemic heart disease, stage 3b renal failure w/ reduced exercise tolerance and T2D. Nil palpitations, chest pain or tightness.</p>
-                        <div class="allergies">
-                            <h3>Allergies</h3>
-                            <p>Furosemide</p>
+                    <aside class="sources-panel" style="display: none;" aria-labelledby="source-title">
+                        <h3 id="source-title">Sources</h3>
+                        <div class="source-content" id="source-content">
+                            <!-- Source content will be loaded dynamically -->
                         </div>
-                        <p>Nil recent travel.</p>
-                        <div class="examination">
-                            <h3>On examination</h3>
-                            <ul>
-                                <li>Alert and oriented</li>
-                                <li>Tripoding and speaking on short sentences and slightly cachectic.</li>
-                                <li>Vitals: BP 98/66, HR 110, RR 24, O2 92%, Temp 36.8%</li>
-                                <li>Pulse irregularly irregular but no radio-radial delay</li>
-                                <li>HSDNM but fluid overloaded w/ grossly elevated JVP 5cm & S3 heard but no audible murmurs or rubs, sacral edema</li>
-                                <li>Cool peripheries w/ CRT > 3s w/ 2+ pitting edema</li>
-                                <li>Fine inspiratory crackles on auscultation in bases of lungs bilaterally</li>
-                                <li>No tenderness in calves</li>
-                                <li>ASNT, nil ascites or shifting dullness</li>
-                            </ul>
-                        </div>
-                        <div class="impression">
-                            <h3>Impression</h3>
-                            <p>Severe decompensated chronic heart failure</p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="enlighten-section">
-                    <h2>Management Goals</h2>
-                    <div class="management-content">
-                        <h3>Bloods</h3>
-                        <ul>
-                            <li>FBCs EUCs, LFTs</li>
-                            <li>BNP or NT-proBNP</li>
-                            <li>CRP</li>
-                            <li>Coagulation Profile</li>
-                            <li>VBG for lactate</li>
-                            <li>HbA1c</li>
-                        </ul>
-                    </div>
+                    </aside>
                 </div>
             </div>
             
@@ -198,7 +160,7 @@
             </div>
         </div>
 
-        <div class="notes-panel">
+        <aside class="notes-panel" role="complementary" aria-label="Patient notes">
             <div class="notes-title">Notes</div>
             <div class="notes-content">
                 <div class="notes-header">
@@ -227,10 +189,33 @@
                 </div>
             </div>
             <div class="footer-buttons">
-                <button id="create-note">Create Note</button>
+                <button id="create-note" aria-label="Create a new note">Create Note</button>
             </div>
-        </div>
+        </aside>
     </div>
+
+    <!-- Card template for screen readers - hidden visually but used for cloning -->
+    <template id="goal-card-template">
+        <article class="goal-card" tabindex="0">
+            <div class="goal-header">
+                <h3 class="card-subtitle"></h3>
+                <h2 class="card-title"></h2>
+            </div>
+            <div class="card-content">
+                <div class="tags"></div>
+                <p class="card-description"></p>
+                <ul class="card-list"></ul>
+                <div class="explain-section">
+                    <button class="explain-link" aria-expanded="false">Explain why ▼</button>
+                    <div class="explanation" style="display: none;"></div>
+                </div>
+                <div class="card-actions">
+                    <button class="action-btn">Action</button>
+                    <button class="edit-btn">Edit</button>
+                </div>
+            </div>
+        </article>
+    </template>
 
     <script src="script.js"></script>
 </body>

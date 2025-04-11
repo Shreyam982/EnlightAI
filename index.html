@@ -29,22 +29,129 @@
                 <div class="section-header">PREVIOUS VISIT</div>
                 <div class="grey-line"></div>
             </div>
-        </div>
+        </aside>
 
         <div class="main-content">
-            <div class="tabs">
-                <div class="tab">SnapShot</div>
-                <div class="tab">Express Lane</div>
-                <div class="tab">Chart Review</div>
-                <div class="tab" id="current-note-tab">Current Note</div>
-                <div class="tab" id="Enlighten-tab">Enlighten</div>
-                <div class="tab" id="mar-tab">MAR</div>
+            <div class="tabs" role="tablist">
+                <div class="tab" role="tab" id="snapshot-tab">SnapShot</div>
+                <div class="tab" role="tab" id="express-lane-tab">Express Lane</div>
+                <div class="tab" role="tab" id="chart-review-tab">Chart Review</div>
+                <div class="tab" role="tab" id="current-note-tab">Current Note</div>
+                <div class="tab" role="tab" id="enlighten-tab">Enlighten</div>
+                <div class="tab" role="tab" id="mar-tab">MAR</div>
             </div>
             
+            <!-- Snapshot content -->
+            <div class="tab-content" id="snapshot-content" style="display: none;" role="tabpanel" aria-labelledby="snapshot-tab">
+                <div class="content-container">
+                    <h2>Snapshot</h2>
+                    <p>Patient snapshot information will appear here.</p>
+                </div>
+            </div>
+            
+            <!-- Express Lane content -->
+            <div class="tab-content" id="express-lane-content" style="display: none;" role="tabpanel" aria-labelledby="express-lane-tab">
+                <div class="content-container">
+                    <h2>Express Lane</h2>
+                    <p>Express Lane information will appear here.</p>
+                </div>
+            </div>
+            
+            <!-- Chart Review content -->
+            <div class="tab-content" id="chart-review-content" style="display: none;" role="tabpanel" aria-labelledby="chart-review-tab">
+                <div class="content-container">
+                    <h2>Chart Review</h2>
+                    <p>Chart Review information will appear here.</p>
+                </div>
+            </div>
+            
+            <!-- Current Note content -->
+            <div class="tab-content" id="current-note-content" style="display: none;" role="tabpanel" aria-labelledby="current-note-tab">
+                <div class="enlighten-section">
+                    <h2>Patient Case</h2>
+                    <div class="case-content">
+                        <p>74yo M presents w/ 3 day worsening dyspnea, orthopnea, peripheral edema and poor appetite. Reports paroxysmal nocturnal dyspnea, 2 pillows at night, breathless at rest. Also reports a decreased urine output but nil hematuria, dysuria, or flank pain. Nil constitutional symptoms of fever, night sweats or unintentional weight loss or infective symptoms of cough w/ sputum, wheeze.</p>
+                    </div>
+                </div>
+
+                <div class="enlighten-section">
+                    <h2>History</h2>
+                    <div class="history-content">
+                        <p>History of atrial fibrillation, severe left ischemic heart disease, stage 3b renal failure w/ reduced exercise tolerance and T2D. Nil palpitations, chest pain or tightness.</p>
+                        <div class="allergies">
+                            <h3>Allergies</h3>
+                            <p>Furosemide</p>
+                        </div>
+                        <p>Nil recent travel.</p>
+                        <div class="examination">
+                            <h3>On examination</h3>
+                            <ul>
+                                <li>Alert and oriented</li>
+                                <li>Tripoding and speaking on short sentences and slightly cachectic.</li>
+                                <li>Vitals: BP 98/66, HR 110, RR 24, O2 92%, Temp 36.8%</li>
+                                <li>Pulse irregularly irregular but no radio-radial delay</li>
+                                <li>HSDNM but fluid overloaded w/ grossly elevated JVP 5cm & S3 heard but no audible murmurs or rubs, sacral edema</li>
+                                <li>Cool peripheries w/ CRT > 3s w/ 2+ pitting edema</li>
+                                <li>Fine inspiratory crackles on auscultation in bases of lungs bilaterally</li>
+                                <li>No tenderness in calves</li>
+                                <li>ASNT, nil ascites or shifting dullness</li>
+                            </ul>
+                        </div>
+                        <div class="impression">
+                            <h3>Impression</h3>
+                            <p>Severe decompensated chronic heart failure</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="enlighten-section">
+                    <h2>Management Goals</h2>
+                    <div class="management-content">
+                        <h3>Bloods</h3>
+                        <ul>
+                            <li>FBCs EUCs, LFTs</li>
+                            <li>BNP or NT-proBNP</li>
+                            <li>CRP</li>
+                            <li>Coagulation Profile</li>
+                            <li>VBG for lactate</li>
+                            <li>HbA1c</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Enlighten content -->
             <div class="tab-content" id="enlighten-content" style="display: none;" role="tabpanel" aria-labelledby="enlighten-tab">
                 <div class="enlighten-container">
                     <div class="cards-container" id="cards-container">
-                        <!-- Cards will be loaded dynamically from JSON -->
+                        <!-- Sample card with working action button -->
+                        <article class="goal-card" tabindex="0">
+                            <div class="goal-header">
+                                <h3 class="card-subtitle">Sample Goal</h3>
+                                <h2 class="card-title">Administer Heart Failure Medication</h2>
+                            </div>
+                            <div class="card-content">
+                                <div class="tags">
+                                    <span class="tag blue">Medication</span>
+                                    <span class="tag green">High Priority</span>
+                                </div>
+                                <p class="card-description">Patient requires immediate medication administration for decompensated heart failure.</p>
+                                <ul class="card-list">
+                                    <li>Cetirizine 10mg daily</li>
+                                    <li>Monitor for improvement in symptoms</li>
+                                </ul>
+                                <div class="explain-section">
+                                    <button class="explain-link" aria-expanded="false">Explain why ▼</button>
+                                    <div class="explanation" style="display: none;">
+                                        Medication required based on current symptoms and medical history. Administering this medication will help manage the patient's condition.
+                                    </div>
+                                </div>
+                                <div class="card-actions">
+                                    <button class="action-btn" id="test-action-btn">Action</button>
+                                    <button class="edit-btn">Edit</button>
+                                </div>
+                            </div>
+                        </article>
                     </div>
 
                     <aside class="sources-panel" style="display: none;" aria-labelledby="source-title">
@@ -56,7 +163,8 @@
                 </div>
             </div>
             
-            <div class="mar-content">
+            <!-- MAR content -->
+            <div class="tab-content" id="mar-content" style="display: none;" role="tabpanel" aria-labelledby="mar-tab">
                 <div class="mar-header">
                     <div class="mar-title">Medication Administration Record (MAR)</div>
                     <div class="mar-subtitle">Documented By: ABERTAM, SIDNEY</div>

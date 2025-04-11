@@ -125,33 +125,28 @@ body {
 }
 
 .tab {
-    padding: 12px 20px;
-    background-color: #f0f0f0;
-    border: none;
-    border-radius: 20px;
+    padding: 10px 20px;
     cursor: pointer;
-    font-weight: normal;
-    font-size: 14px;
-    text-align: center;
-    min-width: 100px;
-    flex: 1;
-    max-width: 180px;
+    border-bottom: 3px solid transparent;
+    transition: all 0.3s ease;
 }
 
 .tab.active {
-    background-color: #ff00cc;
-    color: white;
-    font-weight: 500;
+    border-bottom-color: #3498db;
+    background-color: rgba(52, 152, 219, 0.1);
 }
 
 .tab-content {
+    display: none;
     padding: 20px;
-    background-color: white;
+    background-color: #fff;
     border-radius: 8px;
+    margin: 20px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    margin-top: 10px;
-    flex: 1;
-    overflow: auto;
+}
+
+.content-container {
+    margin-bottom: 20px;
 }
 
 .current-note-content {
@@ -276,22 +271,19 @@ button:focus {
 /* Enlighten Tab Styles */
 .enlighten-container {
     display: flex;
-    height: 100%;
+    gap: 20px;
 }
 
 .cards-container {
     flex: 1;
-    padding: 20px;
-    overflow-y: auto;
 }
 
 .sources-panel {
-    width: 40%;
-    background-color: white;
-    padding: 20px;
-    border-left: 1px solid #ddd;
-    box-shadow: -2px 0 5px rgba(0, 0, 0, 0.05);
-    overflow-y: auto;
+    flex: 0 0 300px;
+    padding: 15px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 }
 
 .sources-panel h3 {
@@ -310,147 +302,134 @@ button:focus {
 }
 
 .goal-card {
-    background-color: white;
-    border-radius: 10px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
     margin-bottom: 20px;
-    overflow: hidden;
+    padding: 16px;
     cursor: pointer;
     transition: box-shadow 0.3s ease;
 }
 
-.goal-card:hover, .goal-card:focus {
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+.goal-card:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 
 .goal-header {
-    padding: 15px 20px;
-    background-color: #f9f9f9;
+    margin-bottom: 16px;
 }
 
-.goal-header h3 {
+.card-subtitle {
+    color: #3498db;
     font-size: 14px;
-    color: #666;
-    margin: 0 0 8px 0;
+    margin-bottom: 4px;
 }
 
-.goal-header h2 {
+.card-title {
     font-size: 18px;
-    margin: 0;
-    color: #333;
+    margin-bottom: 8px;
 }
 
-.card-content {
-    padding: 15px 20px;
+.card-description {
+    color: #555;
+    margin-bottom: 12px;
 }
 
 .tags {
     display: flex;
-    gap: 10px;
-    margin-bottom: 15px;
     flex-wrap: wrap;
-}
-
-.tag-container {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 10px;
+    gap: 6px;
+    margin-bottom: 12px;
 }
 
 .tag {
+    padding: 4px 8px;
+    border-radius: 4px;
     font-size: 12px;
-    padding: 4px 10px;
-    border-radius: 15px;
-    display: inline-block;
     font-weight: 500;
 }
 
-.tag.pink {
-    background-color: #ffcce6;
-    color: #990066;
-}
-
-.tag.orange {
-    background-color: #ffe6cc;
-    color: #cc6600;
-}
-
-.tag.red {
-    background-color: #ffcccc;
-    color: #cc0000;
-}
-
 .tag.blue {
-    background-color: #cce5ff;
-    color: #004085;
+    background-color: #e3f2fd;
+    color: #1565c0;
 }
 
 .tag.green {
-    background-color: #d4edda;
-    color: #155724;
+    background-color: #e8f5e9;
+    color: #2e7d32;
 }
 
-.author-tag {
-    font-weight: bold;
+.tag.red {
+    background-color: #ffebee;
+    color: #c62828;
 }
 
-.card-content p {
-    margin: 0 0 10px 0;
-    font-size: 14px;
-}
-
-.card-content ul {
-    margin: 10px 0;
-    padding-left: 25px;
-}
-
-.card-content li {
-    margin-bottom: 5px;
-    font-size: 14px;
+.tag.yellow {
+    background-color: #fffde7;
+    color: #f9a825;
 }
 
 .explain-section {
-    margin: 15px 0;
+    margin-top: 16px;
 }
 
 .explain-link {
-    color: #3399ff;
-    text-decoration: none;
-    font-size: 13px;
-    display: block;
-    margin-bottom: 5px;
+    color: #3498db;
     background: none;
     border: none;
-    text-align: left;
     padding: 0;
+    font-size: 14px;
     cursor: pointer;
+    text-decoration: underline;
 }
 
 .explanation {
-    background-color: #f0f0f0;
-    padding: 10px 15px;
-    border-radius: 5px;
-    font-size: 13px;
+    margin-top: 8px;
+    padding: 12px;
+    background-color: #f8f9fa;
+    border-radius: 4px;
+    font-size: 14px;
     color: #555;
-    line-height: 1.4;
-    margin-top: 5px;
 }
 
 .card-actions {
     display: flex;
     gap: 10px;
-    margin-top: 15px;
-<<<<<<< Updated upstream
-    padding: 15px;
-    background-color: #fff;
-    border-radius: 6px;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    margin-top: 16px;
+}
+
+.action-btn, .edit-btn {
+    padding: 8px 16px;
+    border-radius: 4px;
+    border: none;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+.action-btn {
+    background-color: #3498db;
+    color: white;
+}
+
+.edit-btn {
+    background-color: #f0f0f0;
+    color: #333;
+}
+
+/* Styling for the tag container in special cards */
+.tag-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-bottom: 12px;
+}
+
+.author-tag {
+    margin-left: auto;
 }
 
 /* MAR Styles */
-.mar-content {
-    display: none; /* Hidden by default, will be shown when tab is active */
+#mar-content {
     padding: 20px;
     background-color: #fff;
     border-radius: 8px;
@@ -672,7 +651,6 @@ button:focus {
     border-radius: 4px;
     margin-top: 15px;
     text-align: center;
-=======
 }
 
 .action-btn {
@@ -757,5 +735,4 @@ button:focus-visible {
 @keyframes fadeIn {
     from { opacity: 0; }
     to { opacity: 1; }
->>>>>>> Stashed changes
 }

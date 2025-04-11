@@ -299,3 +299,229 @@ button:hover {
     border-radius: 6px;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 }
+
+/* MAR Styles */
+.mar-content {
+    display: none; /* Hidden by default, will be shown when tab is active */
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    margin: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.mar-header {
+    margin-bottom: 25px;
+    border-bottom: 1px solid #e0e0e0;
+    padding-bottom: 15px;
+}
+
+.mar-title {
+    font-size: 20px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 8px;
+}
+
+.mar-subtitle, .mar-date {
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 5px;
+}
+
+.medication-section {
+    background-color: #f9f9f9;
+    border: 1px solid #e0e0e0;
+    border-radius: 6px;
+    overflow: hidden;
+    margin-bottom: 20px;
+}
+
+.medication-header {
+    background-color: #f0f0f0;
+    padding: 12px 15px;
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.med-icon {
+    margin-right: 10px;
+    color: #999;
+}
+
+.med-name {
+    color: #3498db;
+    font-weight: bold;
+    margin-right: 10px;
+}
+
+.med-info {
+    color: #666;
+    font-size: 14px;
+}
+
+.medication-details {
+    padding: 15px;
+    background-color: #fff;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.med-detail-row {
+    display: flex;
+    margin-bottom: 8px;
+}
+
+.detail-label {
+    flex: 0 0 200px;
+    color: #666;
+    font-size: 13px;
+    text-align: right;
+    padding-right: 10px;
+}
+
+.detail-value {
+    flex: 1;
+    color: #333;
+    font-size: 13px;
+}
+
+.medication-form {
+    padding: 20px;
+    background-color: #fff;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.form-row {
+    display: flex;
+    margin-bottom: 15px;
+    gap: 15px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+
+.comment-group {
+    flex: 2;
+}
+
+.form-control {
+    padding: 8px 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+.form-control:focus {
+    border-color: #3498db;
+    outline: none;
+    box-shadow: 0 0 4px rgba(52, 152, 219, 0.3);
+}
+
+.dose-group {
+    display: flex;
+    align-items: center;
+}
+
+.dose-input {
+    width: 60px;
+    text-align: center;
+}
+
+.dose-unit {
+    margin-left: 5px;
+    color: #666;
+}
+
+.submit-button {
+    margin-left: auto;
+    padding: 8px 25px;
+    background-color: #3498db;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.submit-button:hover {
+    background-color: #2980b9;
+}
+
+.next-actions {
+    padding: 15px;
+    background-color: #f9f9f9;
+}
+
+.next-actions-title {
+    font-size: 14px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.next-actions-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 5px;
+}
+
+.action-date, .action-time, .action-status {
+    text-align: center;
+    font-size: 13px;
+    padding: 5px;
+}
+
+.action-status {
+    color: #e74c3c;
+    font-weight: bold;
+}
+
+/* Animation classes */
+.typing {
+    border-color: #3498db;
+    box-shadow: 0 0 4px rgba(52, 152, 219, 0.5);
+}
+
+.cursor-blink {
+    animation: blink 1s infinite;
+}
+
+.highlight {
+    background-color: #ffffcc;
+    transition: background-color 0.5s;
+}
+
+.highlight-success {
+    background-color: #d4edda;
+    transition: background-color 0.5s;
+}
+
+@keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+}
+
+.completion-animation {
+    animation: fadein 0.5s;
+}
+
+@keyframes fadein {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+/* Completion message */
+.completion-message {
+    display: none;
+    padding: 15px;
+    background-color: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+    border-radius: 4px;
+    margin-top: 15px;
+    text-align: center;
+}

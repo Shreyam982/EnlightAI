@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Healthcare Dashboard</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="top-bar">
+        <div class="logo">Epic</div>
+        <div class="search-bar">
+            <span class="stethoscope">🩺</span>
+            <span class="patient-name">Cobb, Jessica</span>
+        </div>
+        <div class="user-name">MATTHEW SHU</div>
+    </div>
+
+    <div class="container">
+        <div class="sidebar">
+            <div class="profile">
+                <div class="profile-pic"></div>
+                <div class="profile-name">Cobb, Jessica</div>
+            </div>
+            <div class="info-section">
+                <div class="section-header">CURRENT VISIT</div>
+                <div class="grey-line"></div>
+                <div class="section-header">PREVIOUS VISIT</div>
+                <div class="grey-line"></div>
+            </div>
+        </div>
+
+        <div class="main-content">
+            <div class="tabs">
+                <div class="tab">SnapShot</div>
+                <div class="tab">Express Lane</div>
+                <div class="tab">Chart Review</div>
+                <div class="tab active">Current Note</div>
+                <div class="tab" id="abridge-tab">Abridge</div>
+            </div>
+            <div class="tab-content" id="abridge-content" style="display: none;">
+                Abridge Assistant Active – Listening for patient context...
+            </div>
+        </div>
+
+        <div class="notes-panel">
+            <div class="notes-title">Notes</div>
+            <div class="notes-content">
+                <div class="notes-header">
+                    <div class="subtitle">My Note</div>
+                    <div class="label">Progress Notes</div>
+                </div>
+                <div class="note-section">
+                    <div class="note-header">Subjective</div>
+                    <div class="note-content">History of Presenting Illness</div>
+                    <div class="placeholder-lines">
+                        <div class="placeholder-line"></div>
+                        <div class="placeholder-line"></div>
+                        <div class="placeholder-line"></div>
+                        <div class="placeholder-line"></div>
+                    </div>
+                </div>
+                <div class="note-section">
+                    <div class="note-header">Objective</div>
+                    <div class="note-content">Physical Exam</div>
+                    <div class="placeholder-lines">
+                        <div class="placeholder-line"></div>
+                        <div class="placeholder-line"></div>
+                        <div class="placeholder-line"></div>
+                        <div class="placeholder-line"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-buttons">
+                <button id="create-note">Create Note</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

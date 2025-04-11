@@ -1,3 +1,31 @@
+document.addEventListener('DOMContentLoaded', function() {
+    const tabs = document.querySelectorAll('.tab');
+    const currentNoteContent = document.querySelector('.current-note-content');
+    
+    tabs.forEach(tab => {
+        tab.addEventListener('click', function() {
+            // Remove active class from all tabs
+            tabs.forEach(t => t.classList.remove('active'));
+            
+            // Add active class to clicked tab
+            this.classList.add('active');
+            
+            // Show/hide content based on tab
+            if (this.id === 'current-note-tab') {
+                currentNoteContent.style.display = 'block';
+            } else {
+                currentNoteContent.style.display = 'none';
+            }
+        });
+    });
+
+    // Initialize with Current Note tab active
+    const currentNoteTab = document.getElementById('current-note-tab');
+    if (currentNoteTab) {
+        currentNoteTab.click();
+    }
+});
+
 document.getElementById('abridge-tab').addEventListener('click', function() {
     // Change active tab styling
     document.querySelector('.tab.active').classList.remove('active');
